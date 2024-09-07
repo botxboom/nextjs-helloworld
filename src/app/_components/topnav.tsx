@@ -10,19 +10,22 @@ function TopNav() {
   return (
     <nav className="flex w-full items-center justify-between border-b p-4 text-xl font-semibold">
       <div>Gallery</div>
-      <UploadButton
-        endpoint="imageUploader"
-        onClientUploadComplete={() => {
-          router.refresh();
-        }}
-      />
+
       <div>
         <SignedOut>
           <SignInButton />
         </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
+        <div className="flex flex-row gap-5">
+          <SignedIn>
+            <UploadButton
+              endpoint="imageUploader"
+              onClientUploadComplete={() => {
+                router.refresh();
+              }}
+            />
+            <UserButton />
+          </SignedIn>
+        </div>
       </div>
     </nav>
   );
