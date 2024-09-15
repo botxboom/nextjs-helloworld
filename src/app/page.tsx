@@ -1,10 +1,11 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { db } from "~/server/db";
+import { getImages } from "~/server/queries";
 
 export const dynamic = "force-dynamic";
 
 async function Images() {
-  const images = await db.query.images.findMany();
+  const images = await getImages();
 
   return (
     <div className="flex flex-wrap gap-5">
@@ -22,7 +23,7 @@ async function Images() {
 
 export default async function HomePage() {
   return (
-    <main className="">
+    <main>
       <SignedOut>Please Sign In</SignedOut>
       <SignedIn>
         <Images />
