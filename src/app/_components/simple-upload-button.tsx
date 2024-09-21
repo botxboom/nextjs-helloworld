@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 "use client";
 
 import { useRouter } from "next/navigation";
 import { useUploadThing } from "~/utils/uploadthing";
 import { toast } from "sonner";
-// import { usePostHog } from "posthog-js/react";
 
 // inferred input off useUploadThing
 type Input = Parameters<typeof useUploadThing>;
@@ -75,11 +75,8 @@ function LoadingSpinnerSVG() {
 export function SimpleUploadButton() {
   const router = useRouter();
 
-  //   const posthog = usePostHog();
-
   const { inputProps } = useUploadThingInputProps("imageUploader", {
     onUploadBegin() {
-      //   posthog.capture("upload_begin");
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       toast(
         <div className="flex items-center gap-2 text-white">
@@ -91,13 +88,11 @@ export function SimpleUploadButton() {
         },
       );
     },
-    // onUploadError(error) {
-    //   posthog.capture("upload_error", { error });
-    //   toast.dismiss("upload-begin");
-    //   toast.error("Upload failed");
-    // },
+    onUploadError(error) {
+      toast.dismiss("upload-begin");
+      toast.error("Upload failed");
+    },
     onClientUploadComplete() {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       toast.dismiss("upload-begin");
       toast("Upload complete!");
 
