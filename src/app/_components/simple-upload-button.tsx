@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 "use client";
 
 import { useRouter } from "next/navigation";
 import { useUploadThing } from "~/utils/uploadthing";
-// import { toast } from "sonner";
+import { toast } from "sonner";
 // import { usePostHog } from "posthog-js/react";
 
 // inferred input off useUploadThing
@@ -77,26 +78,28 @@ export function SimpleUploadButton() {
   //   const posthog = usePostHog();
 
   const { inputProps } = useUploadThingInputProps("imageUploader", {
-    // onUploadBegin() {
-    //   posthog.capture("upload_begin");
-    //   toast(
-    //     <div className="flex items-center gap-2 text-white">
-    //       <LoadingSpinnerSVG /> <span className="text-lg">Uploading...</span>
-    //     </div>,
-    //     {
-    //       duration: 100000,
-    //       id: "upload-begin",
-    //     },
-    //   );
-    // },
+    onUploadBegin() {
+      //   posthog.capture("upload_begin");
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      toast(
+        <div className="flex items-center gap-2 text-white">
+          <LoadingSpinnerSVG /> <span className="text-lg">Uploading...</span>
+        </div>,
+        {
+          duration: 100000,
+          id: "upload-begin",
+        },
+      );
+    },
     // onUploadError(error) {
     //   posthog.capture("upload_error", { error });
     //   toast.dismiss("upload-begin");
     //   toast.error("Upload failed");
     // },
     onClientUploadComplete() {
-      //   toast.dismiss("upload-begin");
-      //   toast("Upload complete!");
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      toast.dismiss("upload-begin");
+      toast("Upload complete!");
 
       router.refresh();
     },
